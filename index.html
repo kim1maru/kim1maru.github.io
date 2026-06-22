@@ -71,7 +71,6 @@
             0% { background-position: 200% 50%; }
             100% { background-position: -200% 50%; }
         }
-        /* Белое свечение для #2 – ослаблено на 20% */
         @keyframes platinumGlow {
             0%, 100% { box-shadow: 0 0 12px rgba(255,255,255,0.16), 0 0 24px rgba(255,255,255,0.08); }
             50% { box-shadow: 0 0 24px rgba(255,255,255,0.4), 0 0 48px rgba(255,255,255,0.16); }
@@ -1081,6 +1080,20 @@
 
     <script>
         // ============================================================
+        // ОТКЛЮЧАЕМ ВОССТАНОВЛЕНИЕ СКРОЛЛА (чтобы не накапливался)
+        // ============================================================
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // ============================================================
+        // СБРАСЫВАЕМ СКРОЛЛ НА ВЕРХ ПРИ ЗАГРУЗКЕ
+        // ============================================================
+        window.addEventListener('load', function() {
+            window.scrollTo(0, 0);
+        });
+
+        // ============================================================
         // ЭФФЕКТ ТУМАНА
         // ============================================================
         const fogLayer = document.getElementById('fogLayer');
@@ -1168,7 +1181,7 @@
         });
 
         // ============================================================
-        // СТРЕЛКА – исчезает при скролле
+        // СТРЕЛКА – исчезает при скролле, но при загрузке всегда показывается
         // ============================================================
         const scrollIndicator = document.getElementById('scrollIndicator');
 
@@ -1179,6 +1192,11 @@
             } else {
                 scrollIndicator.classList.remove('hidden');
             }
+        });
+
+        // Принудительно показываем стрелку при загрузке (чтобы она не исчезла случайно)
+        window.addEventListener('load', function() {
+            scrollIndicator.classList.remove('hidden');
         });
 
         // ============================================================
@@ -1204,10 +1222,10 @@
         }
 
         // ============================================================
-        // ДАННЫЕ ПЛЕЙЛИСТОВ – ВСЕ ОБЛОЖКИ ЗАМЕНЕНЫ НА ЛОКАЛЬНЫЕ ФАЙЛЫ
+        // ДАННЫЕ ПЛЕЙЛИСТОВ – ВСЕ ОБЛОЖКИ ЛОКАЛЬНЫЕ
         // ============================================================
         const playlistsData = [
-            // VK (4 шт) – vk_cover1.jpg … vk_cover4.jpg
+            // VK
             {
                 name: 'Фонк / Phonk (BOOM)',
                 platform: 'vk',
@@ -1244,7 +1262,7 @@
                     { display: 'kim!maru - Oni Blade', year: 2024 }
                 ]
             },
-            // Яндекс (13 шт) – ya_cover1.png … ya_cover13.png
+            // Яндекс
             {
                 name: 'Топ 100: Фонк',
                 platform: 'yandex',
@@ -1435,17 +1453,13 @@
                 let animationId = null;
                 let startTime = 0;
 
-                if (p.cover && p.cover.startsWith('http')) {
+                if (p.cover) {
                     getDominantColor(p.cover, function(color) {
                         glowColor = color;
                         card.style.setProperty('--cover-glow', color);
                     });
                 } else {
-                    // для локальных файлов тоже попробуем загрузить
-                    getDominantColor(p.cover, function(color) {
-                        glowColor = color;
-                        card.style.setProperty('--cover-glow', color);
-                    });
+                    card.style.setProperty('--cover-glow', 'rgba(255, 255, 255, 0.25)');
                 }
 
                 function animateGlow(timestamp) {
