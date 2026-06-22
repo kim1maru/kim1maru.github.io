@@ -378,21 +378,18 @@
             margin-bottom: 0.5rem;
         }
 
-        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (внутри flex-контейнера, справа) ===== */
+        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (под описанием, центрирован) ===== */
         .countdown-wrapper {
-            flex: 0 0 auto;
+            width: 100%;
             display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-left: auto;
-            padding-left: 20px;
-            min-width: 160px;
+            justify-content: center;
+            margin: 30px 0 20px;
         }
 
         .countdown-grid {
             display: flex;
-            gap: 16px;
-            justify-content: flex-end;
+            gap: 40px;
+            justify-content: center;
             align-items: baseline;
         }
 
@@ -403,8 +400,8 @@
         }
 
         .countdown-number {
-            font-size: 2.8rem;
-            font-weight: 800;
+            font-size: 3.2rem;          /* такой же, как у RUKIA */
+            font-weight: 800;           /* жирный */
             color: #ffffff;
             letter-spacing: 0.02em;
             font-variant-numeric: tabular-nums;
@@ -413,12 +410,12 @@
         }
 
         .countdown-label {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.12em;
+            color: rgba(255, 255, 255, 0.45);
             font-weight: 600;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         /* ===== ДОПОЛНИТЕЛЬНОЕ ИЗОБРАЖЕНИЕ (рукиа) ===== */
@@ -958,15 +955,8 @@
             .release-description { min-width: 0; }
             .release-description .desc-text { font-size: 0.95rem; }
 
-            /* счётчик переносится под описание и центрируется */
-            .countdown-wrapper {
-                flex: 1 1 100%;
-                justify-content: center;
-                margin-left: 0;
-                padding-left: 0;
-                margin-top: 10px;
-            }
-            .countdown-grid { gap: 20px; justify-content: center; }
+            .countdown-wrapper { margin: 20px 0 15px; }
+            .countdown-grid { gap: 20px; }
             .countdown-number { font-size: 2.2rem; }
             .countdown-label { font-size: 0.65rem; }
 
@@ -1072,26 +1062,25 @@
                             <p>Трек пропитан давлением переживаний персонажа, наполнен чёткой ритмикой с мощным басом и очень приятными скачущими верхами и шумовыми эффектами. Финальный дроп включает в себя boom-bap-ритмику с глубоким панчовым басом и эффектами дыхания и сражений, погружающими в полное отчаяние главного персонажа, чьи эмоции и чувства ощущает на себе слушатель.</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (внутри release-content, справа от описания) ===== -->
-                    <div class="countdown-wrapper">
-                        <div class="countdown-grid">
-                            <div class="countdown-item">
-                                <span class="countdown-number" id="days">00</span>
-                                <span class="countdown-label" id="daysLabel">дней</span>
-                            </div>
-                            <div class="countdown-item">
-                                <span class="countdown-number" id="hours">00</span>
-                                <span class="countdown-label" id="hoursLabel">часов</span>
-                            </div>
-                            <div class="countdown-item">
-                                <span class="countdown-number" id="minutes">00</span>
-                                <span class="countdown-label" id="minutesLabel">минут</span>
-                            </div>
+                <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (под описанием, перед картинкой) ===== -->
+                <div class="countdown-wrapper">
+                    <div class="countdown-grid">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days">00</span>
+                            <span class="countdown-label" id="daysLabel">дней</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours">00</span>
+                            <span class="countdown-label" id="hoursLabel">часов</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes">00</span>
+                            <span class="countdown-label" id="minutesLabel">минут</span>
                         </div>
                     </div>
-
-                </div> <!-- /release-content -->
+                </div>
 
                 <!-- Дополнительное изображение (рукиа) -->
                 <div class="release-extra-image">
