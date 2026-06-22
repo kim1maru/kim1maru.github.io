@@ -416,6 +416,46 @@
             100% { transform: translate(8px, -6px) scale(1.01); }
         }
 
+        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (после описания) ===== */
+        .countdown-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 30px 0 20px;
+        }
+
+        .countdown-grid {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: baseline;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-number {
+            font-size: 3.2rem;          /* такой же, как у RUKIA */
+            font-weight: 800;           /* жирный */
+            color: #ffffff;
+            letter-spacing: 0.02em;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 40px rgba(60, 180, 255, 0.2), 0 0 80px rgba(60, 180, 255, 0.1);
+            line-height: 1.2;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
         /* ===== СТРЕЛКА ===== */
         .scroll-indicator {
             display: flex;
@@ -914,6 +954,11 @@
             .release-cover { flex: 0 0 100%; max-width: 280px; }
             .release-description .desc-text { font-size: 0.95rem; }
 
+            /* адаптив счётчика */
+            .countdown-grid { gap: 20px; }
+            .countdown-number { font-size: 2.2rem; }
+            .countdown-label { font-size: 0.7rem; }
+
             .release-extra-image {
                 width: 340px;
                 max-width: 48%;
@@ -1017,6 +1062,25 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (после описания сингла) ===== -->
+                <div class="countdown-wrapper">
+                    <div class="countdown-grid">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days">00</span>
+                            <span class="countdown-label">дней</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours">00</span>
+                            <span class="countdown-label">часов</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes">00</span>
+                            <span class="countdown-label">минут</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Дополнительное изображение (рукиа) -->
                 <div class="release-extra-image">
                     <div class="float-move">
@@ -1605,6 +1669,43 @@
             card.addEventListener('mouseenter', enterHandler);
             card.addEventListener('mouseleave', leaveHandler);
         });
+
+        // ============================================================
+        // ОБРАТНЫЙ ОТСЧЁТ ДО 24 ИЮЛЯ 2026, 00:00 МСК (только дни, часы, минуты)
+        // ============================================================
+        (function() {
+            const targetDate = new Date('2026-07-24T00:00:00+03:00');
+
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+
+            function updateCountdown() {
+                const now = new Date();
+                let diff = targetDate - now;
+
+                if (diff <= 0) {
+                    daysEl.textContent = '00';
+                    hoursEl.textContent = '00';
+                    minutesEl.textContent = '00';
+                    clearInterval(intervalId);
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                diff -= days * (1000 * 60 * 60 * 24);
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                diff -= hours * (1000 * 60 * 60);
+                const minutes = Math.floor(diff / (1000 * 60));
+
+                daysEl.textContent = String(days).padStart(2, '0');
+                hoursEl.textContent = String(hours).padStart(2, '0');
+                minutesEl.textContent = String(minutes).padStart(2, '0');
+            }
+
+            const intervalId = setInterval(updateCountdown, 1000);
+            updateCountdown();
+        })();
     </script>
 
 </body>
