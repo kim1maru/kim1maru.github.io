@@ -378,18 +378,18 @@
             margin-bottom: 0.5rem;
         }
 
-        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (внутри .release-description, после текста) ===== */
+        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА — прижат к левому краю текста ===== */
         .countdown-wrapper {
             width: 100%;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;  /* ← прижимаем к левому краю */
             margin-top: 20px;
         }
 
         .countdown-grid {
             display: flex;
             gap: 40px;
-            justify-content: center;
+            justify-content: flex-start;  /* ← сетка тоже прижата влево */
             align-items: baseline;
         }
 
@@ -400,8 +400,8 @@
         }
 
         .countdown-number {
-            font-size: 3.2rem;          /* такой же, как у RUKIA */
-            font-weight: 800;           /* жирный */
+            font-size: 3.2rem;
+            font-weight: 800;
             color: #ffffff;
             letter-spacing: 0.02em;
             font-variant-numeric: tabular-nums;
@@ -1062,7 +1062,7 @@
                             <p>Трек пропитан давлением переживаний персонажа, наполнен чёткой ритмикой с мощным басом и очень приятными скачущими верхами и шумовыми эффектами. Финальный дроп включает в себя boom-bap-ритмику с глубоким панчовым басом и эффектами дыхания и сражений, погружающими в полное отчаяние главного персонажа, чьи эмоции и чувства ощущает на себе слушатель.</p>
                         </div>
 
-                        <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (внутри .release-description, после текста) ===== -->
+                        <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА ===== -->
                         <div class="countdown-wrapper">
                             <div class="countdown-grid">
                                 <div class="countdown-item">
