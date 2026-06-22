@@ -378,13 +378,13 @@
             margin-bottom: 0.5rem;
         }
 
-        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА — внутри .release-content, на всю ширину, центрирован ===== */
+        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА — центрирован, поднят вверх ===== */
         .countdown-wrapper {
             width: 100%;
-            flex: 0 0 100%;        /* занимает всю ширину строки в flex-контейнере */
+            flex: 0 0 100%;
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 5px;        /* ← минимальный отступ, сразу под текстом */
             margin-bottom: 10px;
         }
 
@@ -957,7 +957,7 @@
             .release-description { min-width: 0; }
             .release-description .desc-text { font-size: 0.95rem; }
 
-            .countdown-wrapper { margin-top: 16px; }
+            .countdown-wrapper { margin-top: 5px; }
             .countdown-grid { gap: 20px; }
             .countdown-number { font-size: 2.2rem; }
             .countdown-label { font-size: 0.65rem; }
@@ -1065,7 +1065,7 @@
                         </div>
                     </div>
 
-                    <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (внутри .release-content, после описания, центрирован) ===== -->
+                    <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА — поднят выше (margin-top: 5px) ===== -->
                     <div class="countdown-wrapper">
                         <div class="countdown-grid">
                             <div class="countdown-item">
