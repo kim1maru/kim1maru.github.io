@@ -378,12 +378,12 @@
             margin-bottom: 0.5rem;
         }
 
-        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (под описанием, центрирован) ===== */
+        /* ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (внутри .release-description, после текста) ===== */
         .countdown-wrapper {
             width: 100%;
             display: flex;
             justify-content: center;
-            margin: 30px 0 20px;
+            margin-top: 20px;
         }
 
         .countdown-grid {
@@ -955,7 +955,7 @@
             .release-description { min-width: 0; }
             .release-description .desc-text { font-size: 0.95rem; }
 
-            .countdown-wrapper { margin: 20px 0 15px; }
+            .countdown-wrapper { margin-top: 16px; }
             .countdown-grid { gap: 20px; }
             .countdown-number { font-size: 2.2rem; }
             .countdown-label { font-size: 0.65rem; }
@@ -1061,26 +1061,27 @@
                             <p>Сингл «RUKIA» — это смелый эксперимент авторов, сочетающий инструментальный этник-хип-хоп с ритмами современного hoodtrap-жанра: интригующее начало с напряжёнными диалогами с участием одноимённого персонажа из аниме «Bleach» переходит в hoodtrap-дроп с фонк-акапеллой, а затем трансформируется в агрессивную этник-электронику с использованием кото и сямисэна.</p>
                             <p>Трек пропитан давлением переживаний персонажа, наполнен чёткой ритмикой с мощным басом и очень приятными скачущими верхами и шумовыми эффектами. Финальный дроп включает в себя boom-bap-ритмику с глубоким панчовым басом и эффектами дыхания и сражений, погружающими в полное отчаяние главного персонажа, чьи эмоции и чувства ощущает на себе слушатель.</p>
                         </div>
-                    </div>
-                </div>
 
-                <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (под описанием, перед картинкой) ===== -->
-                <div class="countdown-wrapper">
-                    <div class="countdown-grid">
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="days">00</span>
-                            <span class="countdown-label" id="daysLabel">дней</span>
+                        <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА (внутри .release-description, после текста) ===== -->
+                        <div class="countdown-wrapper">
+                            <div class="countdown-grid">
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="days">00</span>
+                                    <span class="countdown-label" id="daysLabel">дней</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="hours">00</span>
+                                    <span class="countdown-label" id="hoursLabel">часов</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="minutes">00</span>
+                                    <span class="countdown-label" id="minutesLabel">минут</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="hours">00</span>
-                            <span class="countdown-label" id="hoursLabel">часов</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="minutes">00</span>
-                            <span class="countdown-label" id="minutesLabel">минут</span>
-                        </div>
-                    </div>
-                </div>
+
+                    </div> <!-- /release-description -->
+                </div> <!-- /release-content -->
 
                 <!-- Дополнительное изображение (рукиа) -->
                 <div class="release-extra-image">
