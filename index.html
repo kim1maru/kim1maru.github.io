@@ -1787,6 +1787,75 @@
             .single-release > .release-diagonal-art { opacity: .13; }
         }
 
+
+        /* Opium archive palette: deep black, silver type, restrained glow */
+        body { background: #000 !important; }
+        body::before {
+            opacity: .2;
+            background-size: 3px 3px, 7px 7px;
+            mix-blend-mode: soft-light;
+        }
+        .fog-layer {
+            opacity: .08;
+            background: radial-gradient(ellipse at 50% 42%, rgba(255,255,255,.025), transparent 66%);
+        }
+        .hero-block, .glass-block, .highlight-item, .playlist-card {
+            background: rgba(3,3,4,.94);
+            border-color: rgba(236,239,246,.16);
+            box-shadow: 0 18px 56px rgba(0,0,0,.82), inset 0 1px rgba(255,255,255,.025);
+        }
+        .single-release::before {
+            opacity: .22;
+            background:
+                radial-gradient(ellipse at 50% 45%, rgba(255,255,255,.028), transparent 56%),
+                radial-gradient(ellipse at 15% 31%, rgba(255,255,255,.018), transparent 44%);
+        }
+        .single-release::after {
+            background:
+                linear-gradient(145deg, rgba(0,0,0,.96), rgba(0,0,0,.985)),
+                url('image/phantom-assassin.jpg') center 42% / cover no-repeat;
+            filter: blur(28px) grayscale(1);
+            opacity: .12;
+        }
+        .single-release > .release-diagonal-art {
+            width: min(58vw, 680px);
+            opacity: .24;
+            filter: grayscale(1) brightness(.72) contrast(1.15) drop-shadow(0 0 26px rgba(221,226,236,.12));
+            mix-blend-mode: screen;
+        }
+        .single-release .release-title {
+            color: #f5f6f8;
+            text-shadow: 0 0 18px rgba(255,255,255,.3), 0 0 52px rgba(230,234,242,.18);
+            animation: opiumSilverAura 5.4s ease-in-out infinite alternate;
+        }
+        .single-release .release-title:hover {
+            color: #fff;
+            text-shadow: 0 0 22px rgba(255,255,255,.8), 0 0 56px rgba(231,235,245,.44), 0 0 108px rgba(219,225,238,.2);
+            filter: drop-shadow(0 0 12px rgba(245,247,252,.24));
+            animation: opiumSilverAura 2.4s ease-in-out infinite alternate;
+        }
+        @keyframes opiumSilverAura {
+            from { text-shadow: 0 0 12px rgba(255,255,255,.2), 0 0 36px rgba(226,231,241,.1), 0 0 70px rgba(214,220,232,.045); }
+            to { text-shadow: 0 0 20px rgba(255,255,255,.48), 0 0 58px rgba(229,234,244,.24), 0 0 110px rgba(222,228,239,.11); }
+        }
+        .playlist-cover img {
+            filter: grayscale(.78) contrast(1.1) brightness(.86);
+            transition: filter .45s ease, transform .45s ease;
+        }
+        .playlist-card:hover .playlist-cover img {
+            filter: grayscale(.16) contrast(1.05) brightness(1.05);
+            transform: scale(1.035);
+        }
+        @media (max-width: 700px) {
+            .single-release > .release-diagonal-art {
+                width: min(78vw, 440px);
+                opacity: .17;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .single-release .release-title { animation: none !important; }
+        }
+
     </style>
 </head>
 <body>
