@@ -1856,6 +1856,73 @@
             .single-release .release-title { animation: none !important; }
         }
 
+        /* Final polish: preserve original playlist artwork and balance the release layout. */
+        :root { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+        body { font-family: Inter, "Segoe UI", system-ui, sans-serif; font-optical-sizing: auto; }
+        .single-release > .release-diagonal-art {
+            opacity: .17;
+            filter: grayscale(1) brightness(.36) contrast(1.18);
+            mix-blend-mode: screen;
+        }
+        .single-release::before {
+            opacity: .12;
+            background: radial-gradient(ellipse at 50% 46%, rgba(255,255,255,.018), transparent 57%);
+        }
+        .single-release .release-content {
+            width: min(100%, 1120px);
+            margin-inline: auto;
+            display: grid;
+            grid-template-columns: minmax(260px, 380px) minmax(0, 1fr);
+            align-items: center;
+            gap: clamp(28px, 5vw, 64px);
+        }
+        .single-release .release-cover { width: 100%; min-width: 0; }
+        .single-release .release-description {
+            width: 100%; min-width: 0; max-width: 62ch; justify-self: center;
+        }
+        .single-release .release-description .desc-text {
+            max-width: 62ch;
+            font-size: clamp(1rem, 1.15vw, 1.08rem);
+            line-height: 1.72;
+            text-align: left;
+            text-wrap: pretty;
+            hyphens: auto;
+        }
+        .single-release .release-description .desc-text p { margin: 0 0 .85em; }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            align-items: stretch;
+        }
+        .stats-row .stat-item { min-width: 0; }
+        .playlist-grid { align-items: stretch; justify-content: center; }
+        .playlist-cover img {
+            filter: none !important;
+            transition: transform .4s cubic-bezier(.2,.75,.25,1), filter .4s ease;
+        }
+        .playlist-card:hover .playlist-cover img {
+            filter: saturate(1.08) brightness(1.04) !important;
+            transform: scale(1.045);
+        }
+        @media (max-width: 760px) {
+            .single-release .release-content {
+                grid-template-columns: minmax(0, 1fr);
+                justify-items: center;
+                gap: 24px;
+            }
+            .single-release .release-cover { width: min(100%, 380px); }
+            .single-release .release-description { max-width: 62ch; }
+        }
+        @media (max-width: 600px) {
+            .stats-row { grid-template-columns: minmax(0, 1fr); }
+        }
+        @media (max-width: 700px) {
+            .single-release > .release-diagonal-art { opacity: .12; filter: grayscale(1) brightness(.3) contrast(1.18); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .playlist-cover img, .playlist-card:hover .playlist-cover img { transition: none; transform: none; }
+        }
+
     </style>
 </head>
 <body>
