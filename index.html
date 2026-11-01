@@ -1219,12 +1219,124 @@
         @media (prefers-reduced-motion: reduce) {
             .ember-spark { animation: none; display: none; }
         }
+
+        /* Global ember particles sit behind every section. */
+        body { isolation: isolate; }
+        .ember-field-global {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: .82;
+            mix-blend-mode: screen;
+        }
+        .container { z-index: 1; }
+        .single-release .release-artists {
+            text-shadow: 0 0 24px rgba(255,255,255,.12);
+        }
+        .countdown-number { text-shadow: 0 0 30px rgba(255,255,255,.17); }
+        .release-cover img { transition: filter .45s ease, transform .65s cubic-bezier(.2,.8,.2,1); }
+        .release-cover:hover img { filter: contrast(1.04) brightness(1.08); transform: scale(1.035); }
+        .stats-year:hover { transform: translateY(-2px); color: rgba(255,255,255,.85); }
+        .single-release .release-title {
+            cursor: default;
+            text-shadow: 0 0 24px rgba(255,255,255,.08);
+            transition: color .28s ease, text-shadow .35s ease, transform .35s ease;
+        }
+        .single-release .release-title:hover {
+            color: #fffafa;
+            transform: scale(1.015);
+            text-shadow: 0 0 12px rgba(255,72,90,.68), 0 0 34px rgba(239,34,58,.72), 0 0 82px rgba(168,12,32,.58);
+        }
+        .release-date {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            padding: 9px 15px;
+            border: 1px solid rgba(245,247,250,.42);
+            border-radius: 999px;
+            color: #f4f5f7 !important;
+            background: rgba(255,255,255,.045);
+            text-shadow: 0 0 16px rgba(255,255,255,.38);
+            box-shadow: 0 0 22px rgba(255,255,255,.08), inset 0 0 16px rgba(255,255,255,.025);
+            transition: background .28s ease, border-color .28s ease, box-shadow .28s ease, transform .28s ease;
+        }
+        .release-date:hover {
+            border-color: rgba(255,255,255,.78);
+            background: rgba(255,255,255,.085);
+            box-shadow: 0 0 28px rgba(255,255,255,.16);
+            transform: translateY(-2px);
+        }
+        .single-release::after {
+            background:
+                linear-gradient(145deg, rgba(0,0,0,.76), rgba(0,0,0,.82)),
+                url('image/phantom-assassin.jpg') center 42% / cover no-repeat;
+            filter: blur(18px) saturate(.55);
+            opacity: .44;
+            transform: scale(1.045);
+        }
+        .single-release .release-cover {
+            border: 1px solid rgba(255,255,255,.13);
+            box-shadow: 0 18px 60px rgba(0,0,0,.72), 0 0 30px rgba(255,255,255,.055);
+            transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease, border-color .3s ease;
+        }
+        .single-release .release-cover:hover {
+            border-color: rgba(255,255,255,.34);
+            box-shadow: 0 22px 70px rgba(0,0,0,.8), 0 0 38px rgba(239,34,58,.16);
+            transform: scale(1.025) translateY(-3px);
+        }
+        .previous-release,
+        .countdown-item,
+        .stats-year,
+        .section-title,
+        .scroll-indicator {
+            transition: transform .32s ease, border-color .32s ease, box-shadow .32s ease, color .32s ease;
+        }
+        .previous-release:hover {
+            transform: translateY(-3px);
+            border-color: rgba(221,232,240,.26);
+            box-shadow: 0 26px 82px rgba(0,0,0,.44), 0 0 28px rgba(230,238,245,.045);
+        }
+        .countdown-item:hover {
+            transform: translateY(-4px) scale(1.035);
+        }
+        .section-title:hover { color: #fff; text-shadow: 0 0 24px rgba(255,255,255,.17); }
+        .scroll-indicator:hover { transform: translateY(4px); }
+        @media (prefers-reduced-motion: reduce) {
+            .ember-field-global { display: none; }
+        }
+
+
+        .stats-year { font-size: clamp(1.05rem, 2.1vw, 1.5rem); letter-spacing: .025em; }
+        .stats-note {
+            margin-top: -14px;
+            max-width: 100%;
+            color: rgba(255,255,255,.48);
+            font-size: .82rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .stats-row { width: min(100%, 1160px); gap: clamp(12px, 1.8vw, 22px); }
+        .stats-row .stat-item { flex: 1 1 210px; min-width: min(210px, 100%); padding: 22px 18px 18px; }
+        .stats-row .sc-value { font-size: clamp(1.75rem, 3vw, 2.45rem); }
+        .sc-trend { margin-top: 7px; font-size: .9rem; font-weight: 650; letter-spacing: .02em; }
+        .trend-down { color: #f06b68; }
+        .trend-up { color: #86ce91; }
+        @media (max-width: 700px) {
+            .stats-year { font-size: clamp(1rem, 5vw, 1.3rem); }
+            .stats-note { max-width: 32rem; font-size: .75rem; }
+            .stats-row .stat-item { flex-basis: min(100%, 280px); }
+            .stats-row .sc-value { font-size: clamp(1.85rem, 8vw, 2.35rem); }
+        }
+
     </style>
 </head>
 <body>
 
     <!-- ===== ТУМАННОЕ СВЕЧЕНИЕ ===== -->
     <div class="fog-layer" id="fogLayer"></div>
+    <div class="ember-field ember-field-global" id="globalEmberField" aria-hidden="true"></div>
 
     <div class="container">
 
@@ -1246,7 +1358,6 @@
 
             <!-- СИНГЛ -->
             <div class="single-release">
-                <div class="ember-field" aria-hidden="true"></div>
                 <div class="vignette"></div>
                 <div class="new-single-badge">✦ Скоро</div>
                 <div class="release-title">PHANTOM ASSASSIN</div>
@@ -1315,19 +1426,28 @@
 
             <!-- СТАТИСТИКА -->
             <div class="stats-wrapper" id="statsWrapper">
-                <div class="stats-year">Данные из Яндекс Музыки за 2026 год</div>
+                <div class="stats-year">Яндекс Музыка · аналитика BandLink</div>
+                <div class="stats-note">За последние 365 дней · последний срез: 6 октября 2026 · обновление данных временно приостановлено</div>
                 <div class="stats-row" id="statsRow">
                     <div class="glass-block stat-item" id="statPlays">
                         <div class="sc-label">прослушивания</div>
-                        <div class="sc-value" id="playsValue">2 065 220</div>
+                        <div class="sc-value" id="playsValue">1 653 448</div>
+                        <div class="sc-trend trend-down">↓ 28%</div>
                     </div>
                     <div class="glass-block stat-item" id="statListeners">
                         <div class="sc-label">слушатели</div>
-                        <div class="sc-value" id="listenersValue">355 270</div>
+                        <div class="sc-value" id="listenersValue">291 379</div>
+                        <div class="sc-trend trend-down">↓ 33%</div>
                     </div>
                     <div class="glass-block stat-item" id="statLikes">
                         <div class="sc-label">лайки треков</div>
-                        <div class="sc-value" id="likesValue">53 485</div>
+                        <div class="sc-value" id="likesValue">44 528</div>
+                        <div class="sc-trend trend-down">↓ 32%</div>
+                    </div>
+                    <div class="glass-block stat-item" id="statEngagement">
+                        <div class="sc-label">вовлечённость</div>
+                        <div class="sc-value">15,3%</div>
+                        <div class="sc-trend trend-up">↑ 0,3%</div>
                     </div>
                 </div>
             </div>
@@ -1889,14 +2009,14 @@
         // ============================================================
         // ЖИВЫЕ ОГНЕННЫЕ ИСКРЫ
         // ============================================================
-        const emberField = document.querySelector('.ember-field');
+        const emberField = document.getElementById('globalEmberField');
         if (emberField && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            for (let index = 0; index < 24; index++) {
+            for (let index = 0; index < 42; index++) {
                 const spark = document.createElement('span');
                 spark.className = 'ember-spark';
                 const duration = 2.8 + Math.random() * 3.6;
                 spark.style.setProperty('--spark-x', `${6 + Math.random() * 88}%`);
-                spark.style.setProperty('--spark-y', `${58 + Math.random() * 42}%`);
+                spark.style.setProperty('--spark-y', `${8 + Math.random() * 88}%`);
                 spark.style.setProperty('--spark-size', `${2 + Math.random() * 2.2}px`);
                 spark.style.setProperty('--spark-duration', `${duration}s`);
                 spark.style.setProperty('--spark-delay', `${-Math.random() * duration}s`);
