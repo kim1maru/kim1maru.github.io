@@ -1995,34 +1995,38 @@
         }
         .single-release .release-description {
             max-width: none;
-            padding: clamp(20px, 2.8vw, 34px);
-            border: 1px solid rgba(235,239,248,.09);
-            border-radius: 22px;
-            background: linear-gradient(145deg, rgba(11,11,14,.78), rgba(3,3,5,.64));
-            box-shadow: 0 18px 48px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.035);
-            backdrop-filter: blur(14px);
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
         }
         .single-release .release-description .desc-text {
             max-width: none;
             font-size: clamp(1rem, 1.13vw, 1.1rem);
-            line-height: 1.78;
+            line-height: 1.82;
             hyphens: none;
             overflow-wrap: normal;
             text-wrap: pretty;
+            text-align: justify;
+            text-justify: inter-word;
         }
         .single-release .release-description .desc-text p { margin-bottom: 1.05em; }
         .single-release .release-description .release-epilogue {
             max-width: none;
-            margin: 1.1em 0 .8em;
-            padding: 15px 18px;
-            border: 1px solid rgba(235,239,248,.09);
-            border-left: 2px solid rgba(236,240,248,.55);
-            border-radius: 4px 14px 14px 4px;
-            background: linear-gradient(100deg, rgba(255,255,255,.065), rgba(255,255,255,.012));
+            margin: 1.25em 0 .85em;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
             color: rgba(248,249,252,.94);
             font-size: clamp(.94rem, 1vw, 1rem);
             line-height: 1.65;
-            letter-spacing: .008em;
+            letter-spacing: .005em;
+            font-weight: 650;
+            text-align: left;
             text-wrap: pretty;
         }
         .single-release .release-description .release-date {
@@ -2033,6 +2037,18 @@
             font-size: .88rem;
             font-weight: 550;
             letter-spacing: .08em;
+        }
+        .single-release .release-cover {
+            box-shadow: 0 18px 60px rgba(0,0,0,.72), 0 0 26px rgba(236,240,248,.06);
+            transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease;
+        }
+        .single-release .release-cover:hover {
+            border-color: rgba(255,255,255,.3);
+            box-shadow:
+                0 22px 70px rgba(0,0,0,.82),
+                0 0 44px rgba(255,126,25,.28),
+                0 0 78px rgba(255,229,190,.19),
+                0 0 112px rgba(54,137,245,.16);
         }
         .stats-row,
         .stats-highlight,
