@@ -1987,6 +1987,89 @@
             .previous-release { border-radius: 15px; }
             .platform-yandex::before, .platform-vk::before { filter: blur(64px); }
         }
+        .single-release .release-content {
+            width: 100%;
+            max-width: none;
+            grid-template-columns: minmax(260px, 36%) minmax(0, 1fr);
+            gap: clamp(22px, 3.6vw, 52px);
+        }
+        .single-release .release-description {
+            max-width: none;
+            padding: clamp(20px, 2.8vw, 34px);
+            border: 1px solid rgba(235,239,248,.09);
+            border-radius: 22px;
+            background: linear-gradient(145deg, rgba(11,11,14,.78), rgba(3,3,5,.64));
+            box-shadow: 0 18px 48px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.035);
+            backdrop-filter: blur(14px);
+        }
+        .single-release .release-description .desc-text {
+            max-width: none;
+            font-size: clamp(1rem, 1.13vw, 1.1rem);
+            line-height: 1.78;
+            hyphens: none;
+            overflow-wrap: normal;
+            text-wrap: pretty;
+        }
+        .single-release .release-description .desc-text p { margin-bottom: 1.05em; }
+        .single-release .release-description .release-epilogue {
+            max-width: none;
+            margin: 1.1em 0 .8em;
+            padding: 15px 18px;
+            border: 1px solid rgba(235,239,248,.09);
+            border-left: 2px solid rgba(236,240,248,.55);
+            border-radius: 4px 14px 14px 4px;
+            background: linear-gradient(100deg, rgba(255,255,255,.065), rgba(255,255,255,.012));
+            color: rgba(248,249,252,.94);
+            font-size: clamp(.94rem, 1vw, 1rem);
+            line-height: 1.65;
+            letter-spacing: .008em;
+            text-wrap: pretty;
+        }
+        .single-release .release-description .release-date {
+            display: inline-block;
+            margin: .1em 0 0;
+            padding: 0;
+            color: rgba(237,240,247,.64);
+            font-size: .88rem;
+            font-weight: 550;
+            letter-spacing: .08em;
+        }
+        .stats-row,
+        .stats-highlight,
+        .section-title,
+        .platform-wrapper { width: 100%; max-width: none; box-sizing: border-box; }
+        .scroll-indicator-slot {
+            position: relative;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 56px;
+            width: 100%;
+        }
+        .scroll-indicator.is-floating {
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: max(16px, env(safe-area-inset-bottom));
+            margin: 0;
+            padding: 9px 15px 8px;
+            border: 1px solid rgba(235,239,248,.16);
+            border-radius: 999px;
+            background: rgba(5,5,7,.84);
+            box-shadow: 0 8px 32px rgba(0,0,0,.5), 0 0 22px rgba(235,239,248,.08);
+            backdrop-filter: blur(14px);
+            transform: translateX(-50%);
+        }
+        .scroll-indicator.is-floating svg { width: 46px; height: 34px; }
+        .scroll-indicator.is-floating:hover { transform: translate(-50%, -3px); }
+        @media (max-width: 760px) {
+            .single-release .release-content { grid-template-columns: minmax(0, 1fr); }
+            .single-release .release-description { width: 100%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .scroll-indicator.is-floating { transition: none; }
+        }
 
     </style>
 </head>
@@ -2054,12 +2137,14 @@
                     </div>
 
                 </div> <!-- /release-content -->
-                <button class="scroll-indicator" id="scrollIndicator" type="button" aria-label="Прокрутить к статистике и плейлистам">
+                <div class="scroll-indicator-slot" id="scrollIndicatorSlot">
+                <button class="scroll-indicator" id="scrollIndicator" type="button" aria-label="Прокрутить страницу вниз">
                                         <svg viewBox="0 0 70 48" aria-hidden="true">
                                             <path d="M10 12 L35 36 L60 12" stroke="rgba(255,255,255,.82)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                                             <path d="M10 24 L35 44 L60 24" stroke="rgba(255,255,255,.52)" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                     </button>
+                </div>
 
             </div>
 
@@ -2256,13 +2341,14 @@
         // ============================================================
         const scrollIndicator = document.getElementById('scrollIndicator');
 
+        const scrollIndicatorSlot = document.getElementById('scrollIndicatorSlot');
         function updateScrollIndicator() {
-            const atTop = (window.scrollY || window.pageYOffset) <= 10;
-            scrollIndicator.classList.toggle('hidden', !atTop);
-            scrollIndicator.disabled = !atTop;
-            scrollIndicator.setAttribute('aria-hidden', String(!atTop));
+            const slot = scrollIndicatorSlot.getBoundingClientRect();
+            const shouldFloat = slot.bottom < 8 || slot.top > window.innerHeight;
+            scrollIndicator.classList.toggle('is-floating', shouldFloat);
         }
         window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+        window.addEventListener('resize', updateScrollIndicator);
         window.addEventListener('pageshow', updateScrollIndicator);
         updateScrollIndicator();
 
@@ -2271,14 +2357,11 @@
         // ============================================================
         scrollIndicator.addEventListener('click', function(e) {
             e.preventDefault();
-            if ((window.scrollY || window.pageYOffset) > 10 || scrollIndicator.disabled) return;
-            scrollIndicator.disabled = true;
-            scrollIndicator.classList.add('hidden');
-            const statsWrapper = document.getElementById('statsWrapper');
-            const targetRect = statsWrapper.getBoundingClientRect();
-            const offsetTop = targetRect.top + window.pageYOffset - 30;
+            const currentY = window.scrollY || window.pageYOffset;
+            const step = Math.max(420, Math.round(window.innerHeight * 0.72));
+            const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
             window.scrollTo({
-                top: offsetTop,
+                top: Math.min(maxY, currentY + step),
                 behavior: 'smooth'
             });
         });
