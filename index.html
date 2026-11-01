@@ -2342,12 +2342,20 @@
         const scrollIndicator = document.getElementById('scrollIndicator');
 
         const scrollIndicatorSlot = document.getElementById('scrollIndicatorSlot');
+        let arrowScrollTarget = window.scrollY || window.pageYOffset;
+        let arrowTargetResetTimer;
+        function resetArrowScrollTarget() {
+            arrowScrollTarget = window.scrollY || window.pageYOffset;
+            window.clearTimeout(arrowTargetResetTimer);
+        }
         function updateScrollIndicator() {
             const slot = scrollIndicatorSlot.getBoundingClientRect();
             const shouldFloat = slot.bottom < 8 || slot.top > window.innerHeight;
             scrollIndicator.classList.toggle('is-floating', shouldFloat);
         }
         window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+        window.addEventListener('wheel', resetArrowScrollTarget, { passive: true });
+        window.addEventListener('touchstart', resetArrowScrollTarget, { passive: true });
         window.addEventListener('resize', updateScrollIndicator);
         window.addEventListener('pageshow', updateScrollIndicator);
         updateScrollIndicator();
@@ -2357,13 +2365,15 @@
         // ============================================================
         scrollIndicator.addEventListener('click', function(e) {
             e.preventDefault();
-            const currentY = window.scrollY || window.pageYOffset;
             const step = Math.max(420, Math.round(window.innerHeight * 0.72));
             const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+            arrowScrollTarget = Math.min(maxY, Math.max(window.scrollY || window.pageYOffset, arrowScrollTarget) + step);
             window.scrollTo({
-                top: Math.min(maxY, currentY + step),
+                top: arrowScrollTarget,
                 behavior: 'smooth'
             });
+            window.clearTimeout(arrowTargetResetTimer);
+            arrowTargetResetTimer = window.setTimeout(resetArrowScrollTarget, 1100);
         });
 
         // ============================================================
