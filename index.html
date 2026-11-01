@@ -1600,6 +1600,152 @@
             transform: scale(1.025) translateY(-3px);
         }
 
+
+        .single-release { padding-top: clamp(24px, 3vw, 38px); }
+        .single-release .release-title {
+            text-shadow: 0 0 16px rgba(249,251,255,.25), 0 0 44px rgba(165,198,255,.17), 0 0 76px rgba(74,140,255,.08);
+            animation: releaseTitlePulse 4.8s ease-in-out infinite alternate;
+        }
+        .single-release .release-title:hover {
+            animation: releaseTitlePulse 1.75s ease-in-out infinite alternate;
+            text-shadow: 0 0 18px rgba(255,255,255,.84), 0 0 52px rgba(183,211,255,.64), 0 0 112px rgba(63,137,255,.34);
+            filter: drop-shadow(0 0 14px rgba(112,169,255,.55));
+        }
+        @keyframes releaseTitlePulse {
+            from { text-shadow: 0 0 12px rgba(248,251,255,.2), 0 0 36px rgba(167,199,255,.12), 0 0 62px rgba(55,129,255,.055); }
+            to { text-shadow: 0 0 18px rgba(255,255,255,.42), 0 0 58px rgba(171,205,255,.28), 0 0 100px rgba(60,135,255,.14); }
+        }
+        .single-release > .release-diagonal-art {
+            position: absolute;
+            left: 50%;
+            top: 53%;
+            width: min(40vw, 470px);
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 2px;
+            opacity: .105;
+            transform: translate(-50%, -50%) rotate(-14deg);
+            transform-origin: center;
+            filter: grayscale(.22) brightness(.78) contrast(1.16) drop-shadow(0 0 38px rgba(43,132,255,.72));
+            mix-blend-mode: screen;
+            z-index: 1 !important;
+            pointer-events: none;
+            animation: diagonalCoverDrift 16s ease-in-out infinite alternate;
+        }
+        @keyframes diagonalCoverDrift {
+            from { transform: translate(-51%, -49%) rotate(-14deg) scale(.98); }
+            to { transform: translate(-49%, -51%) rotate(-11deg) scale(1.035); }
+        }
+        .release-epilogue {
+            max-width: 38rem;
+            margin-top: 8px;
+            padding: 10px 0 10px 14px;
+            border-left: 1px solid rgba(192,216,255,.56);
+            color: rgba(242,246,255,.88);
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: .012em;
+            line-height: 1.55;
+        }
+        .release-description .desc-text p { margin-bottom: .5rem; }
+        .release-content .release-cover { animation: coverFloat 7s ease-in-out infinite; }
+        @keyframes coverFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .release-content .release-cover:hover { animation-play-state: paused; }
+        .release-content .release-description { animation: promoReveal .75s .12s both; }
+        @keyframes promoReveal {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .release-scroll-group { margin-bottom: 8px; }
+        .scroll-indicator {
+            padding: 4px 18px 8px;
+            margin: 8px auto 6px;
+            gap: 0;
+        }
+        .scroll-indicator svg {
+            width: 62px;
+            height: 44px;
+            animation: bounce 1.75s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(235,242,255,.33));
+        }
+        .stats-wrapper { margin-top: 8px; padding: 10px 0 14px; }
+        .section-bottom { padding-top: clamp(16px, 2.4vw, 28px); margin-top: -8px; }
+        .platform-wrapper { isolation: isolate; }
+        .platform-yandex::before,
+        .platform-vk::before {
+            content: "";
+            position: absolute;
+            inset: -14px -5vw;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(55px);
+        }
+        .platform-yandex::before {
+            opacity: .78;
+            background: radial-gradient(ellipse at 50% 45%, rgba(255,208,45,.24), transparent 66%);
+        }
+        .platform-yandex .platform-yandex-glow {
+            opacity: .72 !important;
+            filter: blur(66px) grayscale(0);
+            animation: none;
+        }
+        .platform-vk::before {
+            opacity: .82;
+            background:
+                radial-gradient(ellipse at 36% 52%, rgba(40,132,255,.28), transparent 62%),
+                radial-gradient(ellipse at 66% 56%, rgba(255,48,174,.24), transparent 64%);
+        }
+        .platform-vk .platform-vk-glow {
+            opacity: .72 !important;
+            filter: blur(52px) grayscale(0);
+            animation: none;
+        }
+        .platform-title, .playlist-grid { position: relative; z-index: 1; }
+        .platform-yandex .platform-logo {
+            filter: drop-shadow(0 0 19px rgba(255,204,35,.5));
+        }
+        .platform-vk .platform-logo {
+            filter: drop-shadow(0 0 17px rgba(48,138,255,.44)) drop-shadow(0 0 22px rgba(255,48,174,.26));
+        }
+        @media (max-width: 700px) {
+            .single-release { padding-top: 24px; }
+            .single-release > .release-diagonal-art { width: min(72vw, 360px); top: 48%; opacity: .085; }
+            .release-epilogue { font-size: .86rem; }
+            .section-bottom { padding-top: 18px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .single-release .release-title,
+            .release-diagonal-art,
+            .release-content .release-cover,
+            .release-content .release-description {
+                animation: none !important;
+            }
+        }
+
+
+        .countdown-item { animation: countdownFloat 5.6s ease-in-out infinite; }
+        .countdown-item:nth-child(2) { animation-delay: .45s; }
+        .countdown-item:nth-child(3) { animation-delay: .9s; }
+        @keyframes countdownFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        .new-single-badge {
+            animation: frostPulse 3.8s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 10px rgba(235,242,255,.16));
+        }
+        @keyframes frostPulse {
+            from { opacity: .76; filter: drop-shadow(0 0 7px rgba(232,240,255,.1)); }
+            to { opacity: 1; filter: drop-shadow(0 0 16px rgba(241,247,255,.32)); }
+        }
+        .release-epilogue { animation: promoReveal .7s .28s both; }
+        @media (prefers-reduced-motion: reduce) {
+            .countdown-item, .new-single-badge, .release-epilogue { animation: none !important; }
+        }
+
     </style>
 </head>
 <body>
@@ -1607,7 +1753,6 @@
     <!-- ===== ТУМАННОЕ СВЕЧЕНИЕ ===== -->
     <div class="fog-layer" id="fogLayer"></div>
     <div class="ember-field ember-field-global" id="globalEmberField" aria-hidden="true"></div>
-    <div class="ember-field ember-field-release" aria-hidden="true"></div>
 
     <div class="container">
 
@@ -1630,6 +1775,8 @@
             <!-- СИНГЛ -->
             <div class="single-release">
                 <div class="vignette"></div>
+                <img class="release-diagonal-art" src="image/phantom-assassin.jpg" alt="" aria-hidden="true" />
+                <div class="ember-field ember-field-release" aria-hidden="true"></div>
                 <div class="new-single-badge">✦ Скоро</div>
                 <div class="release-title">PHANTOM ASSASSIN</div>
                 <div class="release-artists">kim!maru</div>
@@ -1650,13 +1797,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="scroll-indicator" id="scrollIndicator" type="button" aria-label="Прокрутить к статистике и плейлистам">
-                        <svg viewBox="0 0 70 48" aria-hidden="true">
-                            <path d="M10 12 L35 36 L60 12" stroke="rgba(255,255,255,.82)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M10 24 L35 44 L60 24" stroke="rgba(255,255,255,.52)" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span class="scroll-hint">Листать ниже</span>
-                    </button>
+                    
                 </div>
                 <div class="release-content">
                     <div class="release-cover">
@@ -1664,13 +1805,19 @@
                     </div>
                     <div class="release-description">
                         <div class="desc-text">
-                            <p>Сингл «PHANTOM ASSASSIN» — это hood trap-эксперимент, вдохновлённый одноимённым персонажем из Dota 2. Трек объединяет эстетику opium с агрессивным звучанием mylancore и aerocore, ориентируясь на саунд EsDeeKid. Основу композиции составляет мощный басс с глубоким низом, жёстким distortion, формирующим плотный, напористый грув. Эффекты дыхания усиливают напряжение и подчёркивают переходы между фазами трека, передавая атмосферу сражений и преследования.</p>
-                            <p>«PHANTOM ASSASSIN» — звуковое воплощение скрытности, агрессии и смертоносной точности Phantom Assassin.</p>
+                            <p>Сингл «PHANTOM ASSASSIN» — электронный hood-trap-эксперимент, вдохновлённый одноимённым персонажем из Dota 2. Трек объединяет эстетику opium с агрессивной подачей mylancore и aerocore, вдохновляясь звучанием EsDeeKid. Мощный бас с глубоким низом и жёстким distortion собирает плотный, напористый грув. Эффекты дыхания усиливают напряжение и подчёркивают переходы между фазами, создавая ощущение сражения и преследования.</p>
+                            <p class="release-epilogue">«PHANTOM ASSASSIN» — звуковое воплощение скрытности, агрессии и смертоносной точности Phantom Assassin.</p>
                             <p class="release-date">Релиз — 1 декабря 2026</p>
                         </div>
                     </div>
 
                 </div> <!-- /release-content -->
+                <button class="scroll-indicator" id="scrollIndicator" type="button" aria-label="Прокрутить к статистике и плейлистам">
+                                        <svg viewBox="0 0 70 48" aria-hidden="true">
+                                            <path d="M10 12 L35 36 L60 12" stroke="rgba(255,255,255,.82)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M10 24 L35 44 L60 24" stroke="rgba(255,255,255,.52)" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
 
             </div>
 
