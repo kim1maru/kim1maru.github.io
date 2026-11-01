@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>RUKIA</title>
+    <title>PHANTOM ASSASSIN — kim!maru</title>
     
     <!-- Favicon (иконка вкладки) -->
-    <link rel="icon" type="image/jpeg" href="image/rukiacover.jpg" />
+    <link rel="icon" type="image/jpeg" href="image/phantom-assassin.jpg" />
     
     <!-- Open Graph для соцсетей (Telegram, VK, Facebook и др.) -->
-    <meta property="og:title" content="RUKIA" />
-    <meta property="og:description" content="RUKIA" />
-    <meta property="og:image" content="https://kim1maru.github.io/image/rukiacover.jpg" />
+    <meta property="og:title" content="PHANTOM ASSASSIN — kim!maru" />
+    <meta property="og:description" content="Новый релиз kim!maru — 1 декабря 2026." />
+    <meta property="og:image" content="https://kim1maru.github.io/image/phantom-assassin.jpg" />
     <meta property="og:url" content="https://kim1maru.github.io/" />
     <meta property="og:type" content="website" />
     
     <!-- Twitter Card (опционально, но добавим для совместимости) -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="RUKIA" />
-    <meta name="twitter:description" content="RUKIA" />
-    <meta name="twitter:image" content="https://kim1maru.github.io/image/rukiacover.jpg" />
+    <meta name="twitter:title" content="PHANTOM ASSASSIN — kim!maru" />
+    <meta name="twitter:description" content="Новый релиз kim!maru — 1 декабря 2026." />
+    <meta name="twitter:image" content="https://kim1maru.github.io/image/phantom-assassin.jpg" />
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1023,6 +1023,76 @@
             .single-release { padding: 60px 30px 100px; }
             .release-extra-image { width: 460px; max-width: 50%; bottom: -190px; right: -115px; opacity: 0.8; }
         }
+        /* ===== ОБНОВЛЁННЫЙ РЕЛИЗ И ПАЛИТРА ===== */
+        body {
+            background:
+                radial-gradient(ellipse at 12% 18%, rgba(17, 105, 137, .22), transparent 38%),
+                radial-gradient(ellipse at 88% 35%, rgba(194, 73, 24, .18), transparent 36%),
+                radial-gradient(ellipse at 48% 92%, rgba(18, 49, 76, .2), transparent 42%),
+                #090b0f;
+        }
+        .fog-layer {
+            opacity: .75;
+            background: radial-gradient(ellipse at 50% 0%, rgba(52, 91, 116, .12), transparent 62%);
+        }
+        .hero-block, .glass-block, .highlight-item, .playlist-card {
+            background: rgba(17, 20, 25, .86);
+            border-color: rgba(167, 195, 211, .12);
+        }
+        .hero-block { background: rgba(13, 17, 22, .82); }
+        .single-release {
+            padding: 54px clamp(16px, 4vw, 56px) 72px;
+            border-radius: 32px;
+            background: linear-gradient(135deg, rgba(13, 21, 29, .72), rgba(21, 16, 15, .62));
+            border: 1px solid rgba(174, 205, 224, .12);
+            overflow: hidden;
+        }
+        .single-release::before {
+            inset: -15%;
+            background: radial-gradient(ellipse at 20% 38%, rgba(21, 145, 181, .24), transparent 48%),
+                        radial-gradient(ellipse at 82% 62%, rgba(255, 104, 42, .22), transparent 44%);
+            filter: blur(54px);
+        }
+        .single-release .release-title {
+            font-size: clamp(2.2rem, 6vw, 4.7rem);
+            line-height: 1.05;
+            text-shadow: 0 0 55px rgba(37, 157, 190, .32), 0 0 90px rgba(234, 99, 48, .18);
+        }
+        .new-single-badge {
+            align-self: center;
+            background: linear-gradient(110deg, #70d8e2, #ff9a55);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .release-cover {
+            flex-basis: min(360px, 100%);
+            box-shadow: 0 18px 60px rgba(0, 0, 0, .55), 0 0 48px rgba(30, 156, 186, .13);
+        }
+        .release-description .desc-text { text-align: left; }
+        .release-date { color: rgba(255,255,255,.72); font-size: .92rem; letter-spacing: .04em; }
+        .countdown-wrapper { margin-top: 8px; }
+        .countdown-number { text-shadow: 0 0 36px rgba(49, 180, 199, .22); }
+        .previous-release {
+            display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+            gap: 8px 24px; margin: 0 0 8px; padding: 20px 26px;
+            border: 1px solid rgba(255,255,255,.09); border-radius: 18px;
+            background: rgba(15,18,22,.7); color: rgba(255,255,255,.72);
+        }
+        .previous-release h2 { color: #fff; font-size: 1.25rem; margin: 0; }
+        .previous-release .previous-meta { font-size: .9rem; }
+        .previous-release .previous-note { color: rgba(255,255,255,.55); font-size: .86rem; flex-basis: 100%; }
+        @media (max-width: 700px) {
+            body { padding: 10px; }
+            .single-release { padding: 36px 16px 42px; }
+            .release-content { gap: 22px; margin-top: 20px; }
+            .release-cover { flex: 0 1 min(320px, 100%); }
+            .countdown-grid { gap: clamp(14px, 5vw, 26px); }
+            .countdown-number { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+            .previous-release { padding: 18px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+        }
     </style>
 </head>
 <body>
@@ -1051,17 +1121,17 @@
             <!-- СИНГЛ -->
             <div class="single-release">
                 <div class="vignette"></div>
-                <div class="new-single-badge">✦ Предстоящий сингл</div>
-                <div class="release-title">RUKIA</div>
-                <div class="release-artists">kim!maru x DEPVRTXT</div>
+                <div class="new-single-badge">✦ Скоро</div>
+                <div class="release-title">PHANTOM ASSASSIN</div>
+                <div class="release-artists">kim!maru</div>
                 <div class="release-content">
                     <div class="release-cover">
-                        <img src="image/rukiacover.jpg" alt="RUKIA" />
+                        <img src="image/phantom-assassin.jpg" alt="Обложка PHANTOM ASSASSIN — kim!maru" />
                     </div>
                     <div class="release-description">
                         <div class="desc-text">
-                            <p>Сингл «RUKIA» — это смелый эксперимент авторов, сочетающий инструментальный этник-хип-хоп с ритмами современного hoodtrap-жанра: интригующее начало с напряжёнными диалогами с участием одноимённого персонажа из аниме «Bleach» переходит в hoodtrap-дроп с фонк-акапеллой, а затем трансформируется в агрессивную этник-электронику с использованием кото и сямисэна.</p>
-                            <p>Трек пропитан давлением переживаний персонажа, наполнен чёткой ритмикой с мощным басом и очень приятными скачущими верхами и шумовыми эффектами. Финальный дроп включает в себя boom-bap-ритмику с глубоким панчовым басом и эффектами дыхания и сражений, погружающими в полное отчаяние главного персонажа, чьи эмоции и чувства ощущает на себе слушатель.</p>
+                            <p>Новый трек kim!maru — мрачное звуковое путешествие на стыке мощного баса, стремительной электроники и кинематографичной атмосферы.</p>
+                            <p class="release-date">Релиз — 1 декабря 2026</p>
                         </div>
                     </div>
 
@@ -1085,13 +1155,13 @@
 
                 </div> <!-- /release-content -->
 
-                <!-- Дополнительное изображение (рукиа) -->
-                <div class="release-extra-image">
-                    <div class="float-move">
-                        <img src="image/rukiatext.png" alt="текст рукиа" />
-                    </div>
-                </div>
             </div>
+
+            <section class="previous-release" aria-labelledby="previousReleaseTitle">
+                <h2 id="previousReleaseTitle">RUKIA</h2>
+                <div class="previous-meta">kim!maru x DEPVRTXT · 24 июля 2026</div>
+                <p class="previous-note">Этник-хип-хоп и hoodtrap с кото, сямисэном и тяжёлым басом.</p>
+            </section>
 
             <!-- СТРЕЛКА -->
             <div class="scroll-indicator" id="scrollIndicator">
@@ -1675,10 +1745,10 @@
         });
 
         // ============================================================
-        // ОБРАТНЫЙ ОТСЧЁТ ДО 24 ИЮЛЯ 2026, 00:00 МСК (с правильным склонением)
+        // ОБРАТНЫЙ ОТСЧЁТ ДО 1 ДЕКАБРЯ 2026, 00:00 МСК (с правильным склонением)
         // ============================================================
         (function() {
-            const targetDate = new Date('2026-07-24T00:00:00+03:00');
+            const targetDate = new Date('2026-12-01T00:00:00+03:00');
 
             const daysEl = document.getElementById('days');
             const hoursEl = document.getElementById('hours');
