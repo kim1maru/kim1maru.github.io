@@ -1409,6 +1409,219 @@
             .ember-spark { display: block; animation: none; opacity: .62; }
         }
 
+
+        /* Archive-like monochrome layout inspired by the reference */
+        body {
+            background: #020203;
+            color: #f2f2f4;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: .16;
+            background-image:
+                radial-gradient(rgba(255,255,255,.34) .45px, transparent .65px),
+                radial-gradient(rgba(255,255,255,.18) .35px, transparent .6px);
+            background-size: 4px 4px, 7px 7px;
+            background-position: 0 0, 2px 3px;
+            mix-blend-mode: screen;
+        }
+        .fog-layer {
+            opacity: .12;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.045), transparent 68%);
+        }
+        .container { z-index: 1; }
+        .hero-block, .glass-block, .highlight-item, .playlist-card {
+            background: rgba(5,5,7,.9);
+            border-color: rgba(238,241,248,.18);
+            box-shadow: 0 16px 50px rgba(0,0,0,.74), inset 0 1px rgba(255,255,255,.035);
+        }
+        .hero-block { background: rgba(3,3,4,.93); }
+        .single-release {
+            border: 0 !important;
+            border-radius: 0;
+            box-shadow: none !important;
+            background: transparent !important;
+        }
+        .single-release .release-title {
+            color: #f7f8fc;
+            background: none;
+            -webkit-text-fill-color: currentColor;
+            text-shadow: 0 0 12px rgba(245,248,255,.2), 0 0 34px rgba(217,226,242,.12);
+            filter: none;
+            transition: text-shadow .35s ease, filter .35s ease;
+        }
+        .single-release .release-title:hover {
+            color: #fff;
+            background: none;
+            -webkit-text-fill-color: currentColor;
+            animation: silverAura 1.9s ease-in-out infinite alternate;
+        }
+        @keyframes silverAura {
+            from {
+                text-shadow: 0 0 10px rgba(255,255,255,.74), 0 0 28px rgba(213,223,241,.45), 0 0 54px rgba(220,230,248,.18);
+                filter: drop-shadow(0 0 4px rgba(255,255,255,.5));
+            }
+            to {
+                text-shadow: 0 0 14px rgba(255,255,255,.92), 0 0 38px rgba(220,230,248,.64), 0 0 76px rgba(225,233,248,.28);
+                filter: drop-shadow(0 0 8px rgba(255,255,255,.66));
+            }
+        }
+        .single-release::before {
+            opacity: .25;
+            background:
+                radial-gradient(ellipse at 14% 33%, rgba(255,255,255,.035), transparent 40%),
+                radial-gradient(ellipse at 84% 69%, rgba(255,255,255,.018), transparent 40%);
+        }
+        .single-release::after {
+            background:
+                linear-gradient(145deg, rgba(0,0,0,.94), rgba(0,0,0,.97)),
+                url('image/phantom-assassin.jpg') center 42% / cover no-repeat;
+            filter: blur(26px) grayscale(.9);
+            opacity: .2;
+        }
+        .release-scroll-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            margin: 8px 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .release-scroll-group .countdown-wrapper {
+            width: 100%;
+            margin: 0;
+            padding: 4px 0 0;
+        }
+        .countdown-number { color: #f4f5f8; text-shadow: 0 0 24px rgba(233,238,249,.19); }
+        .countdown-label { color: rgba(236,239,246,.58); }
+        .scroll-indicator {
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            margin: 0;
+            padding: 2px 16px 8px;
+            border: 0;
+            background: transparent;
+            color: rgba(242,244,250,.65);
+            font: inherit;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            font-size: .62rem;
+            cursor: pointer;
+        }
+        .scroll-indicator svg {
+            width: 54px;
+            height: 38px;
+            animation: bounce 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 9px rgba(240,244,255,.24));
+        }
+        .scroll-indicator:hover { color: #fff; transform: translateY(3px); }
+        .scroll-hint { opacity: .72; transition: opacity .25s ease; }
+        .scroll-indicator:hover .scroll-hint { opacity: 1; }
+        .previous-release {
+            display: block;
+            padding: 16px 20px;
+            border: 1px solid rgba(236,240,248,.18);
+            border-radius: 3px;
+            background: rgba(5,5,7,.72);
+            box-shadow: 0 18px 54px rgba(0,0,0,.5);
+        }
+        .previous-summary { display: block; list-style: none; cursor: pointer; }
+        .previous-summary::-webkit-details-marker { display: none; }
+        .previous-heading { align-items: center; }
+        .previous-title { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+        .previous-kicker { color: rgba(240,243,250,.52); }
+        .previous-artists { margin-top: 6px; color: rgba(240,243,250,.56); }
+        .previous-meta { border: 0; padding: 0; color: rgba(240,243,250,.48); font-size: .8rem; }
+        .previous-micro { margin: 12px 0 6px; color: rgba(240,243,250,.7); font-size: .92rem; line-height: 1.5; }
+        .previous-toggle { display: inline-flex; align-items: center; gap: 8px; color: rgba(240,243,250,.48); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; }
+        .previous-toggle span { font-size: 1rem; transition: transform .25s ease; }
+        .previous-release[open] .previous-toggle span { transform: rotate(45deg); }
+        .previous-content { margin-top: 20px; }
+        .previous-cover { border-radius: 2px; }
+        .stats-wrapper { margin-top: 20px; padding: clamp(18px, 3vw, 34px) 0; }
+        .stats-year { color: rgba(245,247,252,.64); font-size: .8rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+        .stats-row .stat-item { background: rgba(6,6,8,.92); border-color: rgba(236,240,248,.2); }
+        .section-bottom { padding-top: clamp(42px, 7vw, 82px); }
+        .section-title {
+            color: #f4f5f8;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            line-height: 1.1;
+            letter-spacing: -.025em;
+            text-transform: uppercase;
+        }
+        .platform-title { color: rgba(245,247,252,.78); letter-spacing: .12em; }
+        .platform-yandex-glow, .platform-vk-glow { opacity: .12 !important; filter: grayscale(1) blur(48px); }
+        @media (max-width: 700px) {
+            .single-release { padding: 34px 14px 42px; }
+            .single-release .release-title { font-size: clamp(2rem, 10vw, 3rem); }
+            .release-scroll-group { margin: 6px 0 14px; }
+            .previous-release { padding: 14px; }
+            .previous-heading { align-items: flex-start; }
+            .previous-micro { font-size: .86rem; }
+            .stats-row .stat-item { flex-basis: min(100%, 320px); }
+        }
+
+
+        .ember-field-global { opacity: .82; }
+        .ember-field-release { opacity: 1; }
+        .ember-spark {
+            background: radial-gradient(circle, #fff 0 13%, #f5f7fc 27%, #d5dbea 49%, #8f9bb0 67%, transparent 84%);
+            box-shadow: 0 0 7px rgba(255,255,255,.95), 0 0 18px rgba(220,229,246,.68), 0 0 30px rgba(196,207,228,.3);
+        }
+        .new-single-badge {
+            color: rgba(246,248,253,.86);
+            background: none;
+            -webkit-text-fill-color: currentColor;
+            animation: none;
+            filter: drop-shadow(0 0 10px rgba(235,241,252,.2));
+        }
+        .release-cover:hover {
+            box-shadow: 0 22px 70px rgba(0,0,0,.8), 0 0 38px rgba(238,243,253,.14);
+        }
+        .previous-release[open] .previous-content { animation: releaseUnfold .35s ease both; }
+        @keyframes releaseUnfold {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+        .single-release .release-title {
+            color: #f8f9fc;
+            background: none !important;
+            background-clip: initial;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: #f8f9fc;
+            text-shadow: 0 0 12px rgba(245,248,255,.22), 0 0 34px rgba(218,226,240,.12);
+            filter: none;
+            animation: none;
+        }
+        .single-release .release-title:hover {
+            color: #fff;
+            background: none !important;
+            background-clip: initial;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: #fff;
+            text-shadow: 0 0 13px rgba(255,255,255,.78), 0 0 38px rgba(221,230,246,.56), 0 0 78px rgba(206,218,238,.28);
+            filter: drop-shadow(0 0 7px rgba(244,247,255,.52));
+            animation: silverAura 1.9s ease-in-out infinite alternate;
+        }
+        @keyframes silverAura {
+            from { filter: drop-shadow(0 0 4px rgba(245,248,255,.42)); }
+            to { filter: drop-shadow(0 0 11px rgba(255,255,255,.76)); }
+        }
+        .single-release .release-cover:hover {
+            border-color: rgba(239,243,251,.34);
+            box-shadow: 0 22px 70px rgba(0,0,0,.8), 0 0 38px rgba(238,243,253,.14);
+            transform: scale(1.025) translateY(-3px);
+        }
+
     </style>
 </head>
 <body>
@@ -1442,19 +1655,7 @@
                 <div class="new-single-badge">✦ Скоро</div>
                 <div class="release-title">PHANTOM ASSASSIN</div>
                 <div class="release-artists">kim!maru</div>
-                <div class="release-content">
-                    <div class="release-cover">
-                        <img src="image/phantom-assassin.jpg" alt="Обложка PHANTOM ASSASSIN — kim!maru" />
-                    </div>
-                    <div class="release-description">
-                        <div class="desc-text">
-                            <p>Сингл «PHANTOM ASSASSIN» — это hood trap-эксперимент, вдохновлённый одноимённым персонажем из Dota 2. Трек объединяет эстетику opium с агрессивным звучанием mylancore и aerocore, ориентируясь на саунд EsDeeKid. Основу композиции составляет мощный басс с глубоким низом, жёстким distortion, формирующим плотный, напористый грув. Эффекты дыхания усиливают напряжение и подчёркивают переходы между фазами трека, передавая атмосферу сражений и преследования.</p>
-                            <p>«PHANTOM ASSASSIN» — звуковое воплощение скрытности, агрессии и смертоносной точности Phantom Assassin.</p>
-                            <p class="release-date">Релиз — 1 декабря 2026</p>
-                        </div>
-                    </div>
-
-                    <!-- ===== СЧЁТЧИК ОБРАТНОГО ОТСЧЁТА — поднят на 142px вверх ===== -->
+                <div class="release-scroll-group">
                     <div class="countdown-wrapper">
                         <div class="countdown-grid">
                             <div class="countdown-item">
@@ -1471,12 +1672,32 @@
                             </div>
                         </div>
                     </div>
+                    <button class="scroll-indicator" id="scrollIndicator" type="button" aria-label="Прокрутить к статистике и плейлистам">
+                        <svg viewBox="0 0 70 48" aria-hidden="true">
+                            <path d="M10 12 L35 36 L60 12" stroke="rgba(255,255,255,.82)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 24 L35 44 L60 24" stroke="rgba(255,255,255,.52)" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="scroll-hint">Листать ниже</span>
+                    </button>
+                </div>
+                <div class="release-content">
+                    <div class="release-cover">
+                        <img src="image/phantom-assassin.jpg" alt="Обложка PHANTOM ASSASSIN — kim!maru" />
+                    </div>
+                    <div class="release-description">
+                        <div class="desc-text">
+                            <p>Сингл «PHANTOM ASSASSIN» — это hood trap-эксперимент, вдохновлённый одноимённым персонажем из Dota 2. Трек объединяет эстетику opium с агрессивным звучанием mylancore и aerocore, ориентируясь на саунд EsDeeKid. Основу композиции составляет мощный басс с глубоким низом, жёстким distortion, формирующим плотный, напористый грув. Эффекты дыхания усиливают напряжение и подчёркивают переходы между фазами трека, передавая атмосферу сражений и преследования.</p>
+                            <p>«PHANTOM ASSASSIN» — звуковое воплощение скрытности, агрессии и смертоносной точности Phantom Assassin.</p>
+                            <p class="release-date">Релиз — 1 декабря 2026</p>
+                        </div>
+                    </div>
 
                 </div> <!-- /release-content -->
 
             </div>
 
-            <section class="previous-release" aria-labelledby="previousReleaseTitle">
+            <details class="previous-release">
+                <summary class="previous-summary">
                 <div class="previous-heading">
                     <div>
                         <div class="previous-kicker">Предыдущий релиз</div>
@@ -1485,6 +1706,9 @@
                     </div>
                     <div class="previous-meta">24 июля 2026</div>
                 </div>
+                    <p class="previous-micro">Этник-хип-хоп, hoodtrap и электроника по мотивам «Bleach».</p>
+                    <span class="previous-toggle">О релизе <span aria-hidden="true">＋</span></span>
+                </summary>
                 <div class="previous-content">
                     <div class="previous-cover">
                         <img src="image/rukiacover.jpg" alt="Обложка сингла RUKIA" loading="lazy" />
@@ -1494,15 +1718,7 @@
                         <p>Трек пропитан давлением переживаний персонажа, наполнен чёткой ритмикой с мощным басом и очень приятными скачущими верхами и шумовыми эффектами. Финальный дроп включает в себя boom-bap-ритмику с глубоким панчовым басом и эффектами дыхания и сражений, погружающими в полное отчаяние главного персонажа, чьи эмоции и чувства ощущает на себе слушатель.</p>
                     </div>
                 </div>
-            </section>
-
-            <!-- СТРЕЛКА -->
-            <div class="scroll-indicator" id="scrollIndicator">
-                <svg viewBox="0 0 70 48">
-                    <path d="M10 12 L35 36 L60 12" stroke="rgba(255,255,255,0.3)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M10 24 L35 44 L60 24" stroke="rgba(255,255,255,0.15)" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+            </details>
 
             <!-- СТАТИСТИКА -->
             <div class="stats-wrapper" id="statsWrapper">
