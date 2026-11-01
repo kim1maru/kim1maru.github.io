@@ -1283,7 +1283,7 @@
         }
         .single-release .release-cover:hover {
             border-color: rgba(255,255,255,.34);
-            box-shadow: 0 22px 70px rgba(0,0,0,.8), 0 0 38px rgba(239,34,58,.16);
+            box-shadow: 0 22px 70px rgba(0,0,0,.8), 0 0 38px rgba(255,174,68,.19), 0 0 52px rgba(255,255,240,.055);
             transform: scale(1.025) translateY(-3px);
         }
         .previous-release,
@@ -1330,6 +1330,85 @@
             .stats-row .sc-value { font-size: clamp(1.85rem, 8vw, 2.35rem); }
         }
 
+
+        body { background: #000; }
+        .fog-layer { opacity: .16; background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.012), transparent 74%); }
+        .single-release {
+            border: 0 !important;
+            outline: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+        .single-release::before {
+            opacity: .36;
+            background:
+                radial-gradient(ellipse at 16% 32%, rgba(255,255,255,.025), transparent 42%),
+                radial-gradient(ellipse at 83% 72%, rgba(255,91,24,.07), transparent 40%),
+                radial-gradient(ellipse at 50% 100%, rgba(101,25,5,.1), transparent 48%);
+        }
+        .single-release::after {
+            background:
+                linear-gradient(145deg, rgba(0,0,0,.91), rgba(0,0,0,.94)),
+                url('image/phantom-assassin.jpg') center 42% / cover no-repeat;
+            filter: blur(22px) saturate(.45);
+            opacity: .28;
+            transform: scale(1.06);
+        }
+        .ember-field-release {
+            position: absolute;
+            inset: 0;
+            z-index: 1 !important;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: .96;
+            mix-blend-mode: screen;
+        }
+        .ember-field-global { opacity: .72; }
+        .ember-spark {
+            background: radial-gradient(circle, #fff 0 12%, #fff0cb 22%, #ffad45 44%, #ff6326 63%, transparent 82%);
+            box-shadow: 0 0 8px rgba(255,246,218,.9), 0 0 17px rgba(255,167,64,.72), 0 0 30px rgba(255,69,27,.32);
+        }
+        .single-release .release-title {
+            color: #fff;
+            background: none;
+            -webkit-text-fill-color: currentColor;
+            text-shadow: 0 0 20px rgba(255,248,225,.12);
+        }
+        .single-release .release-title:hover {
+            color: #fff8e8;
+            background: linear-gradient(92deg, #fff 0%, #fff9e6 26%, #ffc45b 60%, #ff7b24 82%, #fff4cf 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 12px rgba(255,255,235,.82), 0 0 34px rgba(255,184,74,.85), 0 0 78px rgba(255,91,25,.58);
+        }
+        .release-date {
+            display: inline;
+            width: auto;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            color: rgba(255,255,255,.86) !important;
+            background: none;
+            box-shadow: none;
+            text-shadow: none;
+            font-size: inherit;
+            font-weight: 400;
+            letter-spacing: normal;
+        }
+        .release-date:hover {
+            border: 0;
+            background: none;
+            box-shadow: none;
+            transform: none;
+            color: #fff !important;
+        }
+        .stats-note, .sc-trend, #statEngagement { display: none !important; }
+        @media (prefers-reduced-motion: reduce) {
+            .ember-field-global, .ember-field-release { display: block; }
+            .ember-spark { display: block; animation: none; opacity: .62; }
+        }
+
     </style>
 </head>
 <body>
@@ -1337,6 +1416,7 @@
     <!-- ===== ТУМАННОЕ СВЕЧЕНИЕ ===== -->
     <div class="fog-layer" id="fogLayer"></div>
     <div class="ember-field ember-field-global" id="globalEmberField" aria-hidden="true"></div>
+    <div class="ember-field ember-field-release" aria-hidden="true"></div>
 
     <div class="container">
 
@@ -1426,28 +1506,19 @@
 
             <!-- СТАТИСТИКА -->
             <div class="stats-wrapper" id="statsWrapper">
-                <div class="stats-year">Яндекс Музыка · аналитика BandLink</div>
-                <div class="stats-note">За последние 365 дней · последний срез: 6 октября 2026 · обновление данных временно приостановлено</div>
+                <div class="stats-year">За последние 365 дней</div>
                 <div class="stats-row" id="statsRow">
                     <div class="glass-block stat-item" id="statPlays">
                         <div class="sc-label">прослушивания</div>
                         <div class="sc-value" id="playsValue">1 653 448</div>
-                        <div class="sc-trend trend-down">↓ 28%</div>
                     </div>
                     <div class="glass-block stat-item" id="statListeners">
                         <div class="sc-label">слушатели</div>
                         <div class="sc-value" id="listenersValue">291 379</div>
-                        <div class="sc-trend trend-down">↓ 33%</div>
                     </div>
                     <div class="glass-block stat-item" id="statLikes">
                         <div class="sc-label">лайки треков</div>
                         <div class="sc-value" id="likesValue">44 528</div>
-                        <div class="sc-trend trend-down">↓ 32%</div>
-                    </div>
-                    <div class="glass-block stat-item" id="statEngagement">
-                        <div class="sc-label">вовлечённость</div>
-                        <div class="sc-value">15,3%</div>
-                        <div class="sc-trend trend-up">↑ 0,3%</div>
                     </div>
                 </div>
             </div>
@@ -2009,21 +2080,24 @@
         // ============================================================
         // ЖИВЫЕ ОГНЕННЫЕ ИСКРЫ
         // ============================================================
-        const emberField = document.getElementById('globalEmberField');
-        if (emberField && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            for (let index = 0; index < 42; index++) {
-                const spark = document.createElement('span');
-                spark.className = 'ember-spark';
-                const duration = 2.8 + Math.random() * 3.6;
-                spark.style.setProperty('--spark-x', `${6 + Math.random() * 88}%`);
-                spark.style.setProperty('--spark-y', `${8 + Math.random() * 88}%`);
-                spark.style.setProperty('--spark-size', `${2 + Math.random() * 2.2}px`);
-                spark.style.setProperty('--spark-duration', `${duration}s`);
-                spark.style.setProperty('--spark-delay', `${-Math.random() * duration}s`);
-                spark.style.setProperty('--spark-drift', `${-22 + Math.random() * 44}px`);
-                spark.style.setProperty('--spark-rise', `${38 + Math.random() * 72}px`);
-                emberField.appendChild(spark);
-            }
+        const emberFields = document.querySelectorAll('.ember-field');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            emberFields.forEach((field) => {
+                const count = field.classList.contains('ember-field-global') ? 36 : 30;
+                for (let index = 0; index < count; index++) {
+                    const spark = document.createElement('span');
+                    spark.className = 'ember-spark';
+                    const duration = 2.6 + Math.random() * 3.8;
+                    spark.style.setProperty('--spark-x', `${4 + Math.random() * 92}%`);
+                    spark.style.setProperty('--spark-y', field.classList.contains('ember-field-global') ? `${8 + Math.random() * 88}%` : `${48 + Math.random() * 50}%`);
+                    spark.style.setProperty('--spark-size', `${2.3 + Math.random() * 2.8}px`);
+                    spark.style.setProperty('--spark-duration', `${duration}s`);
+                    spark.style.setProperty('--spark-delay', `${-Math.random() * duration}s`);
+                    spark.style.setProperty('--spark-drift', `${-28 + Math.random() * 56}px`);
+                    spark.style.setProperty('--spark-rise', `${44 + Math.random() * 86}px`);
+                    field.appendChild(spark);
+                }
+            });
         }
 
         // ============================================================
