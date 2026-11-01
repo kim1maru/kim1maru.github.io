@@ -1771,6 +1771,22 @@
             .single-release > .release-diagonal-art { opacity: .11; }
         }
 
+
+        .single-release::before {
+            opacity: .4;
+            background:
+                radial-gradient(ellipse at 51% 47%, rgba(37,105,205,.18), transparent 52%),
+                radial-gradient(ellipse at 17% 34%, rgba(230,239,255,.025), transparent 41%),
+                radial-gradient(ellipse at 84% 70%, rgba(43,114,220,.08), transparent 46%);
+        }
+        .single-release > .release-diagonal-art {
+            opacity: .19;
+            filter: grayscale(.08) brightness(.86) contrast(1.1) drop-shadow(0 0 46px rgba(44,128,255,.8)) drop-shadow(0 0 86px rgba(31,94,220,.36));
+        }
+        @media (max-width: 700px) {
+            .single-release > .release-diagonal-art { opacity: .13; }
+        }
+
     </style>
 </head>
 <body>
