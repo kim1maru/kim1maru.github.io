@@ -1923,6 +1923,71 @@
             .playlist-cover img, .playlist-card:hover .playlist-cover img { transition: none; transform: none; }
         }
 
+        /* Shared section rhythm, softer transitions, and one consistent page grid. */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            box-sizing: border-box;
+            padding: 12px clamp(16px, 3.2vw, 38px) 32px;
+            gap: clamp(24px, 3.2vw, 42px);
+        }
+        .container > .section-top,
+        .container > .section-bottom {
+            width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+        .section-top { gap: clamp(22px, 2.8vw, 36px); }
+        .section-bottom {
+            position: relative;
+            padding-top: clamp(18px, 2.6vw, 34px);
+            margin-top: 0;
+        }
+        .single-release,
+        .previous-release,
+        .stats-wrapper,
+        .platform-wrapper { width: 100%; box-sizing: border-box; }
+        .previous-release {
+            border-radius: 18px;
+            border-color: rgba(236,239,246,.12);
+            background: linear-gradient(145deg, rgba(9,9,11,.9), rgba(3,3,4,.82));
+            box-shadow: 0 16px 48px rgba(0,0,0,.34), inset 0 1px rgba(255,255,255,.025);
+            transition: border-color .35s ease, background .35s ease, box-shadow .35s ease;
+        }
+        .previous-release:hover,
+        .previous-release[open] {
+            border-color: rgba(236,239,246,.2);
+            background: linear-gradient(145deg, rgba(12,12,14,.94), rgba(4,4,5,.88));
+        }
+        .previous-cover { border-radius: 14px; overflow: hidden; }
+        .platform-wrapper::after { opacity: .55; }
+        .platform-yandex::before,
+        .platform-vk::before { inset: -12% -7%; filter: blur(90px); }
+        .platform-yandex::before {
+            opacity: .48;
+            background: radial-gradient(ellipse at 50% 48%, rgba(255,208,45,.2), transparent 72%);
+        }
+        .platform-yandex .platform-yandex-glow { opacity: .48 !important; filter: blur(88px) grayscale(0); }
+        .platform-vk::before {
+            opacity: .5;
+            background:
+                radial-gradient(ellipse at 36% 52%, rgba(40,132,255,.2), transparent 70%),
+                radial-gradient(ellipse at 66% 56%, rgba(255,48,174,.18), transparent 72%);
+        }
+        .platform-vk .platform-vk-glow { opacity: .5 !important; filter: blur(82px) grayscale(0); }
+        .scroll-indicator.hidden {
+            visibility: hidden;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: translateY(-12px) !important;
+            animation: none !important;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 8px 16px 26px; gap: 24px; }
+            .previous-release { border-radius: 15px; }
+            .platform-yandex::before, .platform-vk::before { filter: blur(64px); }
+        }
+
     </style>
 </head>
 <body>
@@ -2191,25 +2256,24 @@
         // ============================================================
         const scrollIndicator = document.getElementById('scrollIndicator');
 
-        window.addEventListener('scroll', function() {
-            const scrollY = window.scrollY || window.pageYOffset;
-            if (scrollY > 10) {
-                scrollIndicator.classList.add('hidden');
-            } else {
-                scrollIndicator.classList.remove('hidden');
-            }
-        });
-
-        // Принудительно показываем стрелку при загрузке
-        window.addEventListener('load', function() {
-            scrollIndicator.classList.remove('hidden');
-        });
+        function updateScrollIndicator() {
+            const atTop = (window.scrollY || window.pageYOffset) <= 10;
+            scrollIndicator.classList.toggle('hidden', !atTop);
+            scrollIndicator.disabled = !atTop;
+            scrollIndicator.setAttribute('aria-hidden', String(!atTop));
+        }
+        window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+        window.addEventListener('pageshow', updateScrollIndicator);
+        updateScrollIndicator();
 
         // ============================================================
         // ПЛАВНАЯ ПРОКРУТКА ПО КЛИКУ НА СТРЕЛКУ
         // ============================================================
         scrollIndicator.addEventListener('click', function(e) {
             e.preventDefault();
+            if ((window.scrollY || window.pageYOffset) > 10 || scrollIndicator.disabled) return;
+            scrollIndicator.disabled = true;
+            scrollIndicator.classList.add('hidden');
             const statsWrapper = document.getElementById('statsWrapper');
             const targetRect = statsWrapper.getBoundingClientRect();
             const offsetTop = targetRect.top + window.pageYOffset - 30;
